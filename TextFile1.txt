@@ -1,0 +1,286 @@
+<?php
+include ('connect.php');
+if(isset($_POST["submit"])){
+	$str = $_POST["search"];
+    $sth = $con->prepare("SELECT * FROM 'gates_study' WHERE Name = '$str'");
+
+    $sth->setFetchMode(PDO:: FETCH_OBJ);
+    $sth -> execute();
+
+    if($row = $sth->fetch())
+    {
+        ?>
+        <table>
+        <tr>
+        <th>PID</th>
+        <th>Visit_Date>
+        </tr>
+        <tr>
+        <td><?php echo $row->PID;?></td>
+        <td><?php echo $row->Visit_Date;?></td>
+        </tr>
+        </table>
+<?php
+    }
+        else{
+            echo "no data";
+        }
+}
+?>
+
+
+border:1px;
+border-radius:05px;
+padding:8px 15px 8px 15px;
+margin::after 10px 0px 15px 0px;
+box-shadow:1px 1px 2px 1px grey;
+
+
+div {
+    width: 100px;
+    height: 50;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+    background-color: dodgerblue;
+}
+
+
+<?php
+$hostname="localhost";
+$username="root";
+$password="";
+$database_name="registration";
+
+$conn=mysqli_connect($servername,$username,$password,$database_name);
+//check the connection
+if(!$conn)
+{
+	die("Connection Failed:" . mysqli_connect_error());
+}
+?>
+
+
+   <tr>
+    <td><?php echo $row['visits'] ?> </td>
+    <td><?php echo $row['vstdate'] ?> </td>
+    </tr>
+
+
+    *gates {
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+
+
+<?php  
+include ('connect.php');
+//export.php  
+$connect = mysqli_connect("localhost", "root", "", "registration");
+$output = '';
+if(isset($_POST["export"]))
+{
+ $query = "SELECT * FROM gates_study";
+ $result = mysqli_query($connect, $query);
+ if(mysqli_num_rows($result) > 0)
+ {
+  $output .= '
+   <table class="table" bordered="1">  
+                    <tr>  
+                         <th>Visits</th>  
+                         <th>Visit Date</th>   
+                    </tr>
+  ';
+  while($row = mysqli_fetch_array($result))
+  {
+   $output .= '
+    <tr>  
+                         <td>'.$row["visits"].'</td>  
+                         <td>'.$row["vstdate"].'</td>  
+                    </tr>
+   ';
+  }
+  $output .= '</table>';
+  header('Content-Type: application/xls');
+  header('Content-Disposition: attachment; filename=download.xls');
+  echo $output;
+ }
+}
+
+table,th,td{
+    border: 1px solid black;
+    width: 1100px;
+    background-color: lightblue;
+}
+?>
+
+ <form div="prescreen">
+	   <table>
+		<tr>
+			<td><strong>Study Id</strong></td>
+			<td>
+			<select name="studyid" id="studyid" onchange="fetchemp()">
+			  <option value="">Select Study Id</option>
+			  <?php
+			  while($rows = mysqli_fetch_array($result)){
+				  $k = $rows['studyid'];
+				  echo '<option value="'.$k.'">'.$k.'</option>';
+			  } 
+			  ?>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>ID/Passport</strong></td>
+			<td>
+			<input type="text" name="id_passport" id="id_passport">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>First Name</strong></td>
+			<td>
+			<input type="text" name="fname" id="fname">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Middle Name</strong></td>
+			<td>
+			<input type="text" name="mname" id="mname">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Surname</strong></td>
+			<td>
+			<input type="text" name="sname" id="sname">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Gender</strong></td>
+			<td>
+			<input type="text" name="gender" id="gender">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Dirth Of Birth</strong></td>
+			<td>
+			<input type="date" name="dob" id="dob">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Contact1</strong></td>
+			<td>
+			<input type="text" name="contact1" id="contact1">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Contact2</strong></td>
+			<td>
+			<input type="text" name="contact2" id="contact2">
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Contact3</strong></td>
+			<td>
+			<input type="text" name="contact3" id="contact3">
+			</td>
+		</tr>
+	</table>
+</form>
+
+&nbsp; 
+
+<?php include('server.php') ?>
+
+<?php
+include ('connect.php');
+$con = mysqli_connect("localhost","root","","registration");
+mysqli_connect($host,$username,$password);
+
+if(isset($_POST['submit'])){
+    $username=$_POST['username'];
+    $password=$_POST['password'];
+
+    $sql="SELECT * FROM login WHERE user='$username' AND pass='$password' limit 1";
+    $results=mysqli_query($sql);
+
+    if (mysqli_num_rows($results) == 1) {
+        echo "successful";
+        exit();
+    }
+    else{
+        echo "incorrect";
+        exit();
+
+        header('location: index.html');
+    }
+}
+?>
+
+
+if($result){
+        echo 'Successful!!!';
+    }else{
+        echo 'failed';
+    }
+    mysqli_close($connect);
+
+
+	<label><strong>Caregiver:</strong> </label>
+    <a href="gatestudy.php">
+    <input type="checkbox" id="Yes" name="vehicle2" value="link">
+    <label for="yes">YES</label>
+    </a>
+
+	<select id="Gender" name="gender">
+            <option value="Male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+
+		<input type="radio" id="Male" name="male" value="Male">
+    <label for="Male">Male</label>
+    <input type="radio" id="Female" name="female" value="Female">
+    <label for="Female">Female</label>
+
+
+	table, th, td, tr {
+    width: 100px;
+    background-color: antiquewhite;
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 17px;
+}
+
+<td><?php 
+echo '<img src="data:image;base64,'.base64_encode($row['image']) 
+?>"/></td>
+
+<?php
+include ('connect.php');
+$conn=mysqli_connect($hostname,$username,$password,$database_name);
+$sql = "select image from image order by id DESC";
+$result = $db->query($sql);
+
+if($result->num_rows > 0){
+	while($row = $result->fetch_assoc()){
+		<img src="data:image;base64,'.base64_encode($row['image']); ?>"/>
+	}
+}
+?>
+
+<?php echo '<img src="data:image;base64,'.base64_encode($row['Photo']).'" >'; ?>
+
+<meta http-equiv="refresh" content="300;url=login.php" />
+
+<?php echo'<img src="data:image/jpeg;base64,'.base64_encode($row['Photo'] ).'" >'; ?><name="image" >
+
+
+
+<?php
+require_once('connect.php');
+require_once('auth_check.php');
+?>
